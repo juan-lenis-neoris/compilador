@@ -104,9 +104,14 @@ public class GeneradorCodigo extends JuanBaseVisitor<String> {
 
     @Override
     public String visitDeclararVariable(JuanParser.DeclararVariableContext ctx) {
-        String tipo = visit(ctx.tipoVariable());        // "int" | "String"
-        String nombre = ctx.ID().getText();
-
+        String tipo = mapearTipo(ctx.tipoVariable().getText());
+        String id = ctx.ID().getText();
+        
+        if (ctx.CORCHETE_IZQ() != null) {
+            String tamano = ctx.INT().getText();
+            return tipo + "[] " + id + " = new " + tipo + "[" + tamano + "]";
+        }
+        
         // Registrar tipo
         tipos.put(nombre, tipo);
 

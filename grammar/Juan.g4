@@ -17,11 +17,11 @@ sentencia
     ;
 
 declararVariable
-    : tipoVariable ID (IGUAL expresion)?
+    : tipoVariable ID (CORCHETE_IZQ INT CORCHETE_DER)? (IGUAL expresion)?
     ;
 
 asignarValor
-    : ID IGUAL expresion
+    : ID (CORCHETE_IZQ expresion CORCHETE_DER)? ID IGUAL expresion
     ;
 
 imprimirValor
@@ -50,6 +50,8 @@ expresion
     | expresion op=(MULTIPLICAR | DIVIDIR) expresion                                             #multiplicacionOp
     // Paréntesis
     | PAREN_IZQ expresion PAREN_DER                                                              #expresionParentesis
+    //Corchetes
+    | ID CORCHETE_IZQ expresion CORCHETE_DER  
     // Literales e identificadores
     | literal                                                                                    #expresionLiteral
     | ID                                                                                         #idExpresion
@@ -102,6 +104,10 @@ IGUAL         : '=' ;
 PAREN_IZQ     : '(' ;
 PAREN_DER     : ')' ;
 PUNTOYCOMA    : ';' ;
+
+// Corchetes 
+CORCHETE_IZQ  : '[' ;
+CORCHETE_DER  : ']' ;
 
 // Identificadores y literales
 ID        : [a-zA-Z_][a-zA-Z_0-9]* ;

@@ -55,6 +55,9 @@ public class Semantico extends JuanBaseVisitor<String> {
         String nombre = ctx.ID().getText();
         String tipo = visit(ctx.tipoVariable()); // "int" | "String"
 
+        boolean esArray = ctx.CORCHETE_IZQ() != null;
+        int tamanoArray = esArray ? Integer.parseInt(ctx.INT().getText()) : 0;
+
         if (tabla.containsKey(nombre)) {
             err(ctx, "variable '" + nombre + "' ya declarada. Sugerencia: usa otro nombre o elimina la declaración previa.");
         } else {
