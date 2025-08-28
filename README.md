@@ -33,4 +33,33 @@ Incluye todas las fases clásicas de un compilador:
 ## ▶️ Ejecución básica
 1. **Generar lexer/parser**  
    ```bash
-   java -cp "tools/antlr-4.13.2-complete.jar" org.antlr.v4.Tool -Dlanguage=Java -visitor -o gen grammar/Juan.g4
+   java -cp "tools\antlr-4.13.2-complete.jar" org.antlr.v4.Tool -Dlanguage=Java -visitor -o gen grammar\Juan.g4
+   ```
+2. **Compilar clases generadas por ANTLR**  
+   ```bash
+   javac -encoding UTF-8 -cp "tools\antlr-4.13.2-complete.jar" -d gen gen\grammar\*.java
+   ```
+1. **Compilar el modo léxico (NUEVO)**  
+   ```bash
+   javac -encoding UTF-8 -cp "tools\antlr-4.13.2-complete.jar;gen" -d gen src\Lexico.java
+   ```
+1. **Compilar tus clases (semántico + generador + main)**  
+   ```bash
+   javac -encoding UTF-8 -cp "tools\antlr-4.13.2-complete.jar;gen" -d gen src\GeneradorCodigo.java src\Semantico.java src\MainJuan.java
+   ```
+1. **Ejecutar modo léxico (NUEVO) — lista tokens**  
+   ```bash
+   java -cp "tools\antlr-4.13.2-complete.jar;gen" Lexico examples\juanExample.remi
+   ```
+1. **Ejecutar pipeline normal (genera out\JuanOut.java)**  
+   ```bash
+   java -cp "tools\antlr-4.13.2-complete.jar;gen" MainJuan examples\juanExample.remi
+   ```
+1. **Compilar el Java generado**  
+   ```bash
+   javac -encoding UTF-8 -d out out\JuanOut.java
+   ```
+1. **Ejecutar el Java generado**  
+   ```bash
+   java -cp out JuanOut
+   ```
