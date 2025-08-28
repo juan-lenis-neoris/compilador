@@ -1,0 +1,9 @@
+entero x;
+cadena s = "hola";
+x = (5 + 3) * 2;
+imprimir(x);
+si x > 10
+  imprimir("mayor");
+sino
+  imprimir("no mayor");
+fin
